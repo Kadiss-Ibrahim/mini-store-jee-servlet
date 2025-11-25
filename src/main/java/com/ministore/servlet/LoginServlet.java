@@ -24,17 +24,14 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Si l'utilisateur est déjà connecté, on le redirige directement vers les produits
         HttpSession session = request.getSession(false);
         if (session != null && session.getAttribute("user") != null) {
             response.sendRedirect(request.getContextPath() + "/products");
             return;
         }
-        // Sinon, on affiche la JSP qui se trouve dans le dossier protégé WEB-INF
         request.getRequestDispatcher("/WEB-INF/views/auth/login.jsp").forward(request, response);
     }
 
-    // 2. Traite la soumission du formulaire (POST)
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -42,20 +39,16 @@ public class LoginServlet extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
-        // Validation basique
         if (email == null || password == null || email.isEmpty() || password.isEmpty()) {
             request.setAttribute("error", "Veuillez remplir tous les champs.");
             request.getRequestDispatcher("/WEB-INF/views/auth/login.jsp").forward(request, response);
             return;
         }
 
-        // Recherche de l'utilisateur en base de données
         AppUser user = userDao.findByEmail(email);
 
-        // Vérification : L'utilisateur existe ET le mot de passe correspond au hachage
         if (user != null && BCrypt.checkpw(password, user.getPasswordHash())) {
 
-            // --- SUCCÈS ---
             // 1. Création de la session HTTP
             HttpSession session = request.getSession();
 
@@ -67,8 +60,6 @@ public class LoginServlet extends HttpServlet {
 
         } else {
 
-            // --- ÉCHEC ---
-            // On renvoie vers la page de login avec un message d'erreur
             request.setAttribute("error", "Email ou mot de passe incorrect.");
             request.getRequestDispatcher("/WEB-INF/views/auth/login.jsp").forward(request, response);
         }

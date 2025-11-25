@@ -44,7 +44,6 @@ public class AppUser {
         this.email = email;
     }
 
-    // Attention : On manipule le HACHAGE ici, jamais le mot de passe clair.
     public String getPasswordHash() {
         return passwordHash;
     }

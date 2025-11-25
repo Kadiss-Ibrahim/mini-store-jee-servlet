@@ -8,10 +8,6 @@ public class UserDao {
     private static final String INSERT_USER_SQL = "INSERT INTO app_user (username, email, password_hash) VALUES (?, ?, ?)";
     private static final String SELECT_USER_BY_EMAIL = "SELECT * FROM app_user WHERE email = ?";
 
-    /**
-     * Enregistre un nouvel utilisateur dans la base de données.
-     * @param user L'utilisateur à enregistrer (avec le mot de passe déjà haché !)
-     */
     public void save(AppUser user) {
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(INSERT_USER_SQL)) {
@@ -27,11 +23,7 @@ public class UserDao {
         }
     }
 
-    /**
-     * Cherche un utilisateur par son email (pour le login).
-     * @param email L'email à chercher
-     * @return L'objet User complet ou null si non trouvé
-     */
+
     public AppUser findByEmail(String email) {
         AppUser user = null;
         try (Connection connection = DatabaseConnection.getConnection();

@@ -13,9 +13,6 @@ public class ProductDao {
     private static final String DELETE_PRODUCT_SQL = "DELETE FROM product WHERE id = ?";
     private static final String UPDATE_PRODUCT_SQL = "UPDATE product SET name = ?, price = ?, description = ? WHERE id = ?";
 
-    /**
-     * Crée un nouveau produit (Create)
-     */
     public void save(Product product) {
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(INSERT_PRODUCT_SQL)) {
@@ -30,9 +27,7 @@ public class ProductDao {
         }
     }
 
-    /**
-     * Récupère tous les produits (Read - List)
-     */
+
     public List<Product> findAll() {
         List<Product> products = new ArrayList<>();
         try (Connection connection = DatabaseConnection.getConnection();
@@ -59,10 +54,6 @@ public class ProductDao {
         return products;
     }
 
-    /**
-     * Récupère un produit par son ID (Read - Single)
-     * Utile pour pré-remplir le formulaire d'édition.
-     */
     public Product findById(Long id) {
         Product product = null;
         try (Connection connection = DatabaseConnection.getConnection();
@@ -84,9 +75,6 @@ public class ProductDao {
         return product;
     }
 
-    /**
-     * Met à jour un produit existant (Update)
-     */
     public boolean update(Product product) {
         boolean rowUpdated = false;
         try (Connection connection = DatabaseConnection.getConnection();
@@ -104,9 +92,7 @@ public class ProductDao {
         return rowUpdated;
     }
 
-    /**
-     * Supprime un produit par son ID (Delete)
-     */
+
     public boolean delete(Long id) {
         boolean rowDeleted = false;
         try (Connection connection = DatabaseConnection.getConnection();

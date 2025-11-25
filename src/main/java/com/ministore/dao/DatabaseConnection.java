@@ -16,8 +16,8 @@ public class DatabaseConnection {
             config.setJdbcUrl("jdbc:postgresql://localhost:5432/ministore_db");
             config.setUsername("postgres");
             config.setPassword("kadiss");
+            config.setDriverClassName("org.postgresql.Driver");
 
-            // Optional mais conseillé
             config.setMaximumPoolSize(10);
             config.setMinimumIdle(2);
             config.setIdleTimeout(30000);

@@ -35,7 +35,6 @@ public class RegisterServlet extends HttpServlet {
         AppUser user = new AppUser(username, email, hashed);
         userDao.save(user);
 
-        // Redirection vers la Servlet de login (pas la JSP direct)
         resp.sendRedirect(req.getContextPath() + "/login");
     }
 }
